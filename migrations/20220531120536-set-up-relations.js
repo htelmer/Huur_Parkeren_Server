@@ -58,8 +58,8 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface.removeColumn("rentedAreas", "userId");
     await queryInterface.removeColumn("rentedAreas", "areaId");
-    // await queryInterface.removeColumn("userFavorites", "userId");
-    // await queryInterface.removeColumn("userFavorites", "areaId");
+    //await queryInterface.removeColumn("userFavorites", "userId");
+    //await queryInterface.removeColumn("userFavorites", "areaId");
     await queryInterface.removeColumn("rentalAreas", "ownerId");
     /**
      * Add reverting commands here.

@@ -4,7 +4,7 @@ const { SALT_ROUNDS } = require("../config/constants");
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /* await queryInterface.bulkInsert(
+    await queryInterface.bulkInsert(
       "users",
       [
         {
@@ -29,10 +29,11 @@ module.exports = {
         },
       ],
       {}
-    );*/
+    );
   },
 
   async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("users", null, {});
     // await queryInterface.bulkDelete("users", null, {});
     /**
      * Add commands to revert seed here.

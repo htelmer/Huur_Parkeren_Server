@@ -6,7 +6,7 @@ module.exports = {
       "areaOwners",
       [
         {
-          userId: 1,
+          ownerId: 1,
           areaId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),

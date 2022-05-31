@@ -29,7 +29,6 @@ module.exports = {
       },
       owner: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
       },
       createdAt: {
         allowNull: false,

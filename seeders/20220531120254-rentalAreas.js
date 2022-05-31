@@ -1,7 +1,11 @@
 "use strict";
+const User = require("../models").user;
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+    const owner1 = await User.findOne({
+      where: { email: "test@test.com" },
+    });
     await queryInterface.bulkInsert(
       "rentalAreas",
       [
@@ -17,7 +21,7 @@ module.exports = {
           latitude: "35",
           longtitude: "35",
           availableSpots: 2,
-          ownerId: 1,
+          ownerId: owner1.id,
         },
       ],
       {}

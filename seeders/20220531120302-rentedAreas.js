@@ -7,9 +7,11 @@ module.exports = {
       [
         {
           rented: false,
+          userId: 2,
           areaId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
+          favorite: true,
         },
       ],
       {}

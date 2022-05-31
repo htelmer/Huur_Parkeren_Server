@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       rentalArea.hasOne(models.rentedArea, { foreignKey: "areaId" });
-      rentalArea.hasMany(models.userFavorite, { foreignKey: "areaId" });
+      //rentalArea.hasMany(models.userFavorite, { foreignKey: "areaId" });
       rentalArea.belongsTo(models.user, { foreignKey: "ownerId" });
       rentalArea.belongsToMany(models.user, {
         through: "areaOwners",

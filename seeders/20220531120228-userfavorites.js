@@ -8,7 +8,7 @@ module.exports = {
     //  where: { email: "a@a.com" },
     // });
     //const area1 = await Area.findOne({ where: { postalCode: "3438LR" } });
-    /*await queryInterface.bulkInsert(
+    /* await queryInterface.bulkInsert(
       "userFavorites",
       [
         {
@@ -27,9 +27,9 @@ module.exports = {
          *   isBetaMember: false
          * }], {});
          */
-    //  ],
+    // ],
     //  {}
-    //);
+    // );
   },
 
   async down(queryInterface, Sequelize) {

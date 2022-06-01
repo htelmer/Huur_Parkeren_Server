@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       longtitude: DataTypes.STRING,
       availableSpots: DataTypes.INTEGER,
       image: DataTypes.STRING,
+      description: DataTypes.STRING,
     },
     {
       sequelize,

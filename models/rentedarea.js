@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   rentedArea.init(
     {
       rented: DataTypes.BOOLEAN,
+      favorite: DataTypes.BOOLEAN,
     },
     {
       sequelize,

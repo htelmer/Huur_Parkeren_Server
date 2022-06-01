@@ -22,6 +22,9 @@ module.exports = {
           longtitude: "35",
           availableSpots: 2,
           ownerId: owner1.id,
+          description: "It is available for two months from 1st of July",
+          image:
+            "https://upload.wikimedia.org/wikipedia/commons/1/19/Blue_Disc_Parking_Area_Markings_Blue_Paint.JPG",
         },
       ],
       {}

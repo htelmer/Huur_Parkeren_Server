@@ -39,7 +39,7 @@ router.post("/login", async (req, res, next) => {
     }
     const user = await User.findOne({
       where: { email: email },
-      include: [{ model: rentedArea }, { model: areaOwner, include: [Area] }],
+      include: [{ model: rentedArea }, { model: Area }],
     });
     if (!user) return res.status(400).send("Wrong credentials");
     const passwordMatch = bcrypt.compareSync(password, user.password);

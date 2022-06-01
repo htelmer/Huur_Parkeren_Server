@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const router = new Router();
 const Area = require("../models").rentalArea;
-const rentedArea = require("../models").rentedArea;
-const areaOwner = require("../models").areaOwner;
+const Favorites = require("../models").userFavorite;
+const Booking = require("../models").booking;
 const authMiddleware = require("../auth/middleware");
 const { toJWT } = require("../auth/jwt");
 const User = require("../models").user;
@@ -11,7 +11,7 @@ const { SALT_ROUNDS } = require("../config/constants");
 router.get("/", async (request, response, next) => {
   try {
     const areas = await Area.findAll({
-      include: [{ model: rentedArea }],
+      include: [{ model: Booking }, { model: User, as: "favorites" }],
     });
     response.send(areas);
   } catch (error) {

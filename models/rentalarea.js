@@ -8,14 +8,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      rentalArea.hasOne(models.rentedArea, { foreignKey: "areaId" });
-      //rentalArea.hasMany(models.userFavorite, { foreignKey: "areaId" });
-      rentalArea.belongsTo(models.user, { foreignKey: "ownerId" });
+      rentalArea.hasMany(models.booking, { foreignKey: "areaId" });
+
+      // problem
+      rentalArea.belongsTo(models.user, { foreignKey: "ownerId", as: "owner" });
       rentalArea.belongsToMany(models.user, {
-        through: "areaOwners",
+        through: "userFavorites",
         foreignKey: "areaId",
+        as: "favorites",
       });
-      // define association here
     }
   }
   rentalArea.init(
@@ -30,7 +31,9 @@ module.exports = (sequelize, DataTypes) => {
       longtitude: DataTypes.STRING,
       availableSpots: DataTypes.INTEGER,
       image: DataTypes.STRING,
-      description: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      streetName: DataTypes.STRING,
+      ownerId: DataTypes.INTEGER,
     },
     {
       sequelize,

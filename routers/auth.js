@@ -6,8 +6,8 @@ const router = Router();
 const authMiddleware = require("../auth/middleware");
 const { SALT_ROUNDS } = require("../config/constants");
 const Area = require("../models").rentalArea;
-const rentedArea = require("../models").rentedArea;
-const areaOwner = require("../models").areaOwner;
+const Booking = require("../models").bookings;
+const Favorites = require("../models").userfavorite;
 
 router.post("/signup", async (req, res, next) => {
   try {
@@ -39,7 +39,10 @@ router.post("/login", async (req, res, next) => {
     }
     const user = await User.findOne({
       where: { email: email },
-      include: [{ model: rentedArea }, { model: Area }],
+      include: [
+        { model: Area, as: "favorites" },
+        { model: Area, as: "owner" },
+      ],
     });
     if (!user) return res.status(400).send("Wrong credentials");
     const passwordMatch = bcrypt.compareSync(password, user.password);

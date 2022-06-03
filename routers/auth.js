@@ -62,8 +62,17 @@ router.post("/login", async (req, res, next) => {
 });
 router.get("/me", authMiddleware, async (req, res) => {
   // don't send back the password hash
-  delete req.user.dataValues["password"];
-  res.status(200).send({ ...req.user.dataValues });
+
+  const userId = req.user.id;
+
+  const user = await User.findByPk(userId, {
+    include: [
+      { model: Area, as: "favorites" },
+      { model: Area, as: "owner" },
+    ],
+  });
+
+  res.status(200).send({ ...user.dataValues });
 });
 
 module.exports = router;

@@ -94,4 +94,32 @@ router.post("/newArea", authMiddleware, async (req, res, next) => {
     next(error);
   }
 });
+router.post("/favorites", authMiddleware, async (req, res, next) => {
+  try {
+    const { userId, areaId } = req.body;
+    console.log("userId", "areaId", userId, areaId);
+
+    const specificFavs = await Favorites.findOne({ where: { userId, areaId } });
+
+    if (!specificFavs) {
+      const favs = await Favorites.create({
+        userId,
+        areaId,
+      });
+      res.send(favs);
+    } else {
+      const deleteFavs = await specificFavs.destroy();
+      res.send(deleteFavs);
+    }
+
+    // check if this combo already exists in favs
+
+    // if it does, delete
+
+    // if not, add.
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;

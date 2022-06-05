@@ -122,4 +122,22 @@ router.post("/favorites", authMiddleware, async (req, res, next) => {
   }
 });
 
+router.delete("/myArea/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    console.log("id??", id);
+    const areaToDelete = await Area.findByPk(id);
+
+    if (!areaToDelete) return res.status(404).send("no area found");
+
+    await areaToDelete.destroy();
+
+    // look at delete status
+    // should we send something?
+    res.send({ message: "area deleted!" });
+  } catch (e) {
+    console.log(e.message);
+  }
+});
+
 module.exports = router;

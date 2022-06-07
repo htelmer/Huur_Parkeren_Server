@@ -8,11 +8,11 @@ const { toJWT } = require("../auth/jwt");
 const User = require("../models").user;
 const { SALT_ROUNDS } = require("../config/constants");
 
-router.delete("/:id", async (req, res, next) => {
+/*router.delete("/:id", async (req, res, next) => {
   try {
-    const { id } = parseInt(req.params.id);
-    console.log("id??", id);
-    const favToRemove = await Favorites.findByPk(parseInt(id));
+    const { areaId } = req.params;
+    console.log("id??", areaId);
+    const favToRemove = await Favorites.findOne(include : [{model: Area, as:"favorites"}], where: { areaId } );
     console.log("favtoremove", favToRemove);
     if (!favToRemove) return res.status(404).send("no favs found");
 
@@ -25,6 +25,6 @@ router.delete("/:id", async (req, res, next) => {
   } catch (e) {
     console.log(e.message);
   }
-});
+});*/
 
 module.exports = router;

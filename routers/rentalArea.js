@@ -26,7 +26,7 @@ router.get("/:id", async (req, res, next) => {
     console.log(req.params);
     const id = parseInt(req.params.id);
     const specificArea = await Area.findByPk(parseInt(id), {
-      include: [{ model: User, as: "favorites" }],
+      include: [{ model: Booking }, { model: User, as: "favorites" }],
     });
     if (!specificArea) {
       res.status(404).send(`Area with id ${req.params.id} not found`);
@@ -100,17 +100,62 @@ router.post("/favorites", authMiddleware, async (req, res, next) => {
     console.log("userId", "areaId", userId, areaId);
 
     const specificFavs = await Favorites.findOne({ where: { userId, areaId } });
-
+    const area = await Area.findByPk(parseInt(areaId));
     if (!specificFavs) {
       const favs = await Favorites.create({
         userId,
         areaId,
       });
-      res.send(favs);
+      res.send(area);
     } else {
       const deleteFavs = await specificFavs.destroy();
-      res.send(deleteFavs);
+      res.send(area);
     }
+
+    // check if this combo already exists in favs
+
+    // if it does, delete
+
+    // if not, add.
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.post("/bookings", authMiddleware, async (req, res, next) => {
+  try {
+    const { tillWhen, areaId } = req.body;
+    console.log("tillWhen", tillWhen);
+    console.log("areaId", areaId);
+
+    const userId = req.user.id;
+    console.log("userId", userId);
+
+    if (!tillWhen) {
+      res.status(400).send("Not enough information provided");
+      return;
+    }
+    const newBooking = await Booking.create({
+      tillWhen,
+      userId,
+      areaId,
+    });
+
+    res.status(200).send(newBooking);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.delete("/savedAreas", authMiddleware, async (req, res, next) => {
+  try {
+    const { userId, areaId } = req.params;
+    console.log("userId", "areaId", userId, areaId);
+
+    const specificFavs = await Favorites.findOne({ where: { userId, areaId } });
+
+    const deleteFavs = await specificFavs.destroy();
+    res.send(deleteFavs);
 
     // check if this combo already exists in favs
 

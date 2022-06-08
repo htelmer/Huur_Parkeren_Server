@@ -147,25 +147,33 @@ router.post("/bookings", authMiddleware, async (req, res, next) => {
   }
 });
 
-router.delete("/savedAreas", authMiddleware, async (req, res, next) => {
-  try {
-    const { userId, areaId } = req.params;
-    console.log("userId", "areaId", userId, areaId);
+router.delete(
+  "/savedAreas/:userId/delete/:areaId",
+  authMiddleware,
+  async (req, res, next) => {
+    try {
+      console.log("HERE");
+      const { userId, areaId } = req.params;
+      console.log("userId", "areaId", userId, areaId);
 
-    const specificFavs = await Favorites.findOne({ where: { userId, areaId } });
+      const specificFavs = await Favorites.findOne({
+        where: { userId, areaId },
+      });
+      const area = await Area.findByPk(parseInt(areaId));
 
-    const deleteFavs = await specificFavs.destroy();
-    res.send(deleteFavs);
+      const deleteFavs = await specificFavs.destroy();
+      res.send(area);
 
-    // check if this combo already exists in favs
+      // check if this combo already exists in favs
 
-    // if it does, delete
+      // if it does, delete
 
-    // if not, add.
-  } catch (e) {
-    next(e);
+      // if not, add.
+    } catch (e) {
+      next(e);
+    }
   }
-});
+);
 
 router.delete("/myArea/:id", async (req, res, next) => {
   try {

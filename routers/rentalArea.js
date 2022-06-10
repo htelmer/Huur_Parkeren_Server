@@ -12,6 +12,10 @@ router.get("/", async (request, response, next) => {
   try {
     const areas = await Area.findAll({
       include: [{ model: Booking }, { model: User, as: "favorites" }],
+      order: [
+        ["availableStartDate", "DESC"],
+        ["id", "ASC"],
+      ],
     });
     console.log("areas?", areas);
     response.status(200).send(areas);
@@ -192,5 +196,48 @@ router.delete("/myArea/:id", async (req, res, next) => {
     console.log(e.message);
   }
 });
+
+/*router.patch("/update/:ownerId/:id", authMiddleware, async (req, res) => {
+  const { id } = req.body;
+  const ownerId = req.user.id;
+  const areaToUpdate = await Area.findByPk(parseInt(id));
+  if (!areaToUpdate.ownerId === req.user.id) {
+    return res
+      .status(403)
+      .send({ message: "You are not authorized to update this area" });
+  }
+
+  const {
+    city,
+    postalCode,
+    streetName,
+    houseNo,
+    price,
+    latitude,
+    longtitude,
+    availableStartDate,
+    availableEndDate,
+    availableSpots,
+    description,
+    image,
+  } = req.body;
+
+  const updatedArea = await rentalArea.update({
+    city,
+    postalCode,
+    streetName,
+    houseNo,
+    price,
+    latitude,
+    longtitude,
+    availableStartDate,
+    availableEndDate,
+    availableSpots,
+    description,
+    image,
+  });
+
+  return res.status(200).send({ updatedArea });
+});*/
 
 module.exports = router;

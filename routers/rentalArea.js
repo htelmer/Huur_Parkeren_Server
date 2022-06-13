@@ -197,8 +197,8 @@ router.delete("/myArea/:id", async (req, res, next) => {
   }
 });
 
-/*router.patch("/update/:ownerId/:id", authMiddleware, async (req, res) => {
-  const { id } = req.body;
+router.patch("/update/:id", async (req, res) => {
+  const { id } = req.params;
   const ownerId = req.user.id;
   const areaToUpdate = await Area.findByPk(parseInt(id));
   if (!areaToUpdate.ownerId === req.user.id) {
@@ -222,7 +222,7 @@ router.delete("/myArea/:id", async (req, res, next) => {
     image,
   } = req.body;
 
-  const updatedArea = await rentalArea.update({
+  const updatedArea = await Area.update({
     city,
     postalCode,
     streetName,
@@ -238,6 +238,6 @@ router.delete("/myArea/:id", async (req, res, next) => {
   });
 
   return res.status(200).send({ updatedArea });
-});*/
+});
 
 module.exports = router;
